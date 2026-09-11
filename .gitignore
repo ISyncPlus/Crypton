@@ -1,0 +1,32 @@
+# Compiled output
+/dist
+/tmp
+/out-tsc
+
+# Node
+/node_modules
+npm-debug.log
+
+# Angular
+/.angular/cache
+.sass-cache/
+
+# Tests
+/coverage
+/test-results
+/playwright-report
+/blob-report
+__screenshots__/
+
+# Scaffolding leftovers
+/.scaffold
+
+# Editors / OS
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db
+
+# Local env
+.env
