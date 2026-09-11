@@ -86,6 +86,7 @@ export class Api {
     this.post<AuthResponse>('/api/auth/login/2fa', { challengeToken, code, recoveryCode });
   forgotPassword = (email: string) => this.post<{ message: string }>('/api/auth/forgot-password', { email });
   resetPassword = (userId: string, token: string, newPassword: string) => this.post<{ reset: boolean }>('/api/auth/reset-password', { userId, token, newPassword });
+  logout = () => this.post<void>('/api/auth/logout');
 
   // account
   me = () => this.get<MeResponse>('/api/me');
@@ -123,6 +124,8 @@ export class Api {
     this.post<CryptoWithdrawal>('/api/wallets/withdrawals', body);
   cancelCryptoWithdrawal = (id: string) => this.post<CryptoWithdrawal>(`/api/wallets/withdrawals/${id}/cancel`);
   simulateDeposit = (asset: AssetCode, amount: string) => this.post<CryptoDeposit>('/api/dev/simulate/crypto-deposit', { asset, amount });
+  /** Development only: runs a background job immediately (e.g. chain-scan, withdrawal-processor). */
+  runJob = (name: string) => this.post<void>(`/api/dev/jobs/${encodeURIComponent(name)}`);
 
   // trade
   quote = (body: { kind: TradeKind; fromAsset: AssetCode; toAsset: AssetCode; amount: string; side: 'From' | 'To' }) => this.post<Quote>('/api/trade/quotes', body);
@@ -167,6 +170,7 @@ export class Api {
   cancelOrder = (id: string, reason?: string) => this.post<P2POrder>(`/api/p2p/orders/${id}/cancel`, { reason });
   openDispute = (id: string, reason: string) => this.post<P2POrder>(`/api/p2p/orders/${id}/dispute`, { reason });
   addEvidence = (id: string, form: FormData) => this.post<P2POrder>(`/api/p2p/orders/${id}/evidence`, form);
+  evidenceFile = (orderId: string, evidenceId: string) => this.http.get(`/api/p2p/orders/${orderId}/evidence/${evidenceId}/file`, { responseType: 'blob' });
   leaveFeedback = (id: string, positive: boolean, comment?: string) => this.post<P2POrder>(`/api/p2p/orders/${id}/feedback`, { positive, comment });
   traderProfile = (userId: string) => this.get<TraderProfile>(`/api/p2p/traders/${userId}`);
 }
