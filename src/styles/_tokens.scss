@@ -43,6 +43,9 @@ $adire: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72'
   --info: #2f58c9;
   --info-soft: #e3e9fb;
 
+  // Charts: one validated series hue per theme (dataviz validator, light on #fff / dark on #151836).
+  --series-1: #3a46a8;
+
   --focus-ring: 0 0 0 3px color-mix(in srgb, var(--info) 38%, transparent);
   --shadow-pop: 0 2px 4px rgb(22 26 58 / 6%), 0 18px 40px -12px rgb(22 26 58 / 28%);
 
@@ -115,6 +118,8 @@ $adire: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72'
   --warn-soft: #33280f;
   --info: #8fabff;
   --info-soft: #1a2552;
+
+  --series-1: #7483f0;
 
   --shadow-pop: 0 2px 4px rgb(0 0 0 / 30%), 0 18px 40px -12px rgb(0 0 0 / 70%);
 }

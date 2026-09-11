@@ -9,7 +9,6 @@
 
 .figure-xl {
   font-stretch: 125%;
-  font-variant-numeric: tabular-nums;
   font-weight: 650;
   font-size: var(--text-4xl);
   letter-spacing: -0.03em;
@@ -750,7 +749,6 @@
   &__value {
     font-size: var(--text-2xl);
     font-stretch: 118%;
-    font-variant-numeric: tabular-nums;
     font-weight: 650;
     letter-spacing: -0.02em;
     line-height: 1.1;
@@ -947,5 +945,65 @@
   from {
     opacity: 0;
     transform: translateY(6px);
+  }
+}
+
+// ---------------------------------------------------------------- menus (CDK menu)
+.menu {
+  display: grid;
+  min-width: 14rem;
+  max-width: calc(100vw - 2rem);
+  padding: var(--space-1);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-pop);
+  animation: cx-rise var(--dur-fast) var(--ease);
+
+  &__label {
+    padding: var(--space-2) var(--space-3);
+    color: var(--ink-3);
+    font-size: var(--text-xs);
+  }
+
+  &__rule {
+    height: 1px;
+    margin: var(--space-1) 0;
+    background: var(--rule);
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    min-height: 2.375rem;
+    padding: 0 var(--space-3);
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: none;
+    color: inherit;
+    font-size: var(--text-md);
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible,
+    &.cdk-menu-item-active {
+      background: var(--hover);
+      box-shadow: none;
+      outline: none;
+    }
+
+    > cx-icon {
+      color: var(--ink-3);
+    }
+
+    &[aria-checked='true'] > cx-icon:last-child {
+      margin-left: auto;
+      color: var(--ink);
+    }
   }
 }

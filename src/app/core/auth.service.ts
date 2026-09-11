@@ -28,6 +28,8 @@ export class AuthService {
   private accessToken: string | null = null;
   private expiresAt = 0;
   private refreshing: Observable<string | null> | null = null;
+  /** When a signed-in session was last ended by a rejected refresh, so the sign-in page can say why. */
+  private endedAt = 0;
 
   readonly user = this._user.asReadonly();
   readonly status = this._status.asReadonly();
@@ -114,7 +116,7 @@ export class AuthService {
 
   /** Called when an authenticated request could not be recovered by refreshing. */
   sessionExpired(): void {
-    const wasSignedIn = this._user() !== null;
+    const wasSignedIn = this._user() !== null || Date.now() - this.endedAt < 10_000;
     this.clear();
     const url = this.router.url;
     if (!url.startsWith('/auth')) {
@@ -145,6 +147,10 @@ export class AuthService {
   }
 
   private clear(): void {
+    if (this._user() !== null) {
+      this.endedAt = Date.now();
+    }
+
     this.accessToken = null;
     this.expiresAt = 0;
     this._user.set(null);

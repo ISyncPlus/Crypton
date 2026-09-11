@@ -104,3 +104,24 @@ export function humanize(value: string): string {
     .replace(/([a-z])([A-Z])/g, '$1 $2')
     .replace(/^./, (c) => c.toUpperCase());
 }
+
+/** Naira rate for boards and tickers: whole naira for large prices, kobo below ₦1,000. */
+export function formatRate(value: DecimalInput): string {
+  const n = Number(fromUnits(toUnits(value)));
+  return `₦${fixed(value, Math.abs(n) >= 1000 ? 0 : 2)}`;
+}
+
+/** Signed percentage change with an arrow so direction never relies on colour alone. */
+export function changeLabel(value: DecimalInput): string {
+  if (value === null || value === undefined || value === '') {
+    return '–';
+  }
+
+  const n = Number(fromUnits(toUnits(value)));
+  const arrow = n > 0 ? '▲' : n < 0 ? '▼' : '';
+  return `${arrow}${arrow ? ' ' : ''}${Math.abs(n).toFixed(2)}%`;
+}
+
+export function initials(first: string | null | undefined, last: string | null | undefined): string {
+  return `${(first ?? '').trim().charAt(0)}${(last ?? '').trim().charAt(0)}`.toUpperCase() || '?';
+}

@@ -168,6 +168,14 @@ export interface Price {
   source: string;
 }
 
+export interface ChainNetwork {
+  network: string;
+  name: string;
+  simulated: boolean;
+  txUrlTemplate: string | null;
+  addressUrlTemplate: string | null;
+}
+
 export interface PricePoint {
   at: string;
   priceNgn: Decimal;

@@ -1,6 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Api } from './api.service';
-import { Asset, AssetCode, Price } from './models';
+import { Asset, AssetCode, ChainNetwork, Price } from './models';
 
 const PRICE_POLL_MS = 30_000;
 
@@ -12,6 +12,7 @@ export class MarketService {
   private assetsLoaded = false;
 
   readonly assets = signal<Asset[]>([]);
+  readonly networks = signal<ChainNetwork[]>([]);
   readonly prices = signal<Price[]>([]);
   readonly pricesError = signal(false);
   readonly lastUpdated = signal<string | null>(null);
@@ -49,6 +50,21 @@ export class MarketService {
     return this.assets().find((asset) => asset.code === code);
   }
 
+  network(name: string | null | undefined): ChainNetwork | undefined {
+    return this.networks().find((n) => n.network === name);
+  }
+
+  /** Block explorer link for a transaction, or null when the network has no public explorer (simulation). */
+  txUrl(network: string | null | undefined, txHash: string | null | undefined): string | null {
+    const template = this.network(network)?.txUrlTemplate;
+    return template && txHash ? template.replace('{txid}', encodeURIComponent(txHash)) : null;
+  }
+
+  addressUrl(network: string | null | undefined, address: string | null | undefined): string | null {
+    const template = this.network(network)?.addressUrlTemplate;
+    return template && address ? template.replace('{address}', encodeURIComponent(address)) : null;
+  }
+
   price(code: AssetCode): Price | undefined {
     return this.priceMap().get(code);
   }
@@ -65,6 +81,7 @@ export class MarketService {
       },
       error: () => (this.assetsLoaded = false),
     });
+    this.api.networks().subscribe({ next: (networks) => this.networks.set(networks), error: () => undefined });
   }
 
   loadPrices(): void {

@@ -9,6 +9,7 @@ import {
   AuthResponse,
   Bank,
   BankAccount,
+  ChainNetwork,
   CryptoDeposit,
   CryptoWithdrawal,
   DepositAddress,
@@ -112,6 +113,7 @@ export class Api {
   assets = () => this.get<Asset[]>('/api/market/assets');
   prices = () => this.get<Price[]>('/api/market/prices');
   priceHistory = (asset: AssetCode, hours = 24) => this.get<PricePoint[]>(`/api/market/prices/${asset}/history`, { hours });
+  networks = () => this.get<ChainNetwork[]>('/api/market/networks');
 
   // wallets
   wallets = () => this.get<WalletsResponse>('/api/wallets');
