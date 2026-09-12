@@ -20,7 +20,7 @@ import { Status } from '../../ui/status';
       gap: var(--space-3);
     }
 
-    .ad-name span {
+    .ad-name > span {
       display: grid;
       line-height: 1.3;
     }

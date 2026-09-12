@@ -26,7 +26,7 @@ import { Pager } from '../../ui/pager';
       gap: var(--space-3);
     }
 
-    .type span {
+    .type > span {
       display: grid;
       line-height: 1.3;
     }

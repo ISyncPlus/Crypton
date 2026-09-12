@@ -4,7 +4,7 @@ import { ADA, shot, signIn } from './support';
 test('buy USDT with naira at a held price', async ({ page }) => {
   await signIn(page, ADA);
   await page.goto('/trade');
-  await expect(page.getByRole('heading', { name: 'Trade' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Trade', exact: true })).toBeVisible();
 
   await page.getByLabel('Asset to receive').selectOption('USDT');
   await page.locator('#amount').fill('20000');

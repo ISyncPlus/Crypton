@@ -29,21 +29,27 @@ export interface TwoFactorOptions {
   confirmLabel?: string;
 }
 
+export interface DialogAria {
+  role?: 'dialog' | 'alertdialog';
+  labelledBy?: string;
+  describedBy?: string;
+}
+
 @Component({
   selector: 'cx-confirm-dialog',
   imports: [Icon],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="dialog" role="alertdialog" aria-labelledby="confirm-title">
+    <div class="dialog">
       <div class="dialog__head">
-        <h2 class="dialog__title" id="confirm-title">{{ data.title }}</h2>
+        <h2 class="dialog__title" id="dlg-confirm-title">{{ data.title }}</h2>
         <button type="button" class="btn btn--quiet btn--icon btn--sm" (click)="ref.close(false)" aria-label="Close">
           <cx-icon name="x" [size]="16" />
         </button>
       </div>
       @if (data.body) {
         <div class="dialog__body">
-          <p class="secondary">{{ data.body }}</p>
+          <p class="secondary" id="dlg-confirm-body">{{ data.body }}</p>
         </div>
       }
       <div class="dialog__foot">
@@ -65,9 +71,9 @@ export class ConfirmDialog {
   imports: [Icon, ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <form class="dialog" (ngSubmit)="submit()" aria-labelledby="prompt-title">
+    <form class="dialog" (submit)="$event.preventDefault(); submit()">
       <div class="dialog__head">
-        <h2 class="dialog__title" id="prompt-title">{{ data.title }}</h2>
+        <h2 class="dialog__title" id="dlg-prompt-title">{{ data.title }}</h2>
         <button type="button" class="btn btn--quiet btn--icon btn--sm" (click)="ref.close(null)" aria-label="Close">
           <cx-icon name="x" [size]="16" />
         </button>
@@ -119,9 +125,9 @@ export class PromptDialog {
   imports: [Icon, ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <form class="dialog" (ngSubmit)="submit()" aria-labelledby="tfa-title">
+    <form class="dialog" (submit)="$event.preventDefault(); submit()">
       <div class="dialog__head">
-        <h2 class="dialog__title" id="tfa-title">{{ data.title ?? 'Confirm with your authenticator' }}</h2>
+        <h2 class="dialog__title" id="dlg-tfa-title">{{ data.title ?? 'Confirm with your authenticator' }}</h2>
         <button type="button" class="btn btn--quiet btn--icon btn--sm" (click)="ref.close(null)" aria-label="Close">
           <cx-icon name="x" [size]="16" />
         </button>
@@ -185,7 +191,8 @@ export class TwoFactorDialog {
 export class Dialogs {
   private readonly dialog = inject(Dialog);
 
-  open<R, D, C>(component: ComponentType<C>, data: D, width = '30rem'): DialogRef<R, C> {
+  /** Opens a dialog. `labelledBy` names the element id of the dialog's heading so assistive technology announces it. */
+  open<R, D, C>(component: ComponentType<C>, data: D, width = '30rem', aria: DialogAria = {}): DialogRef<R, C> {
     return this.dialog.open<R, D, C>(component, {
       data,
       width,
@@ -193,19 +200,25 @@ export class Dialogs {
       backdropClass: 'cx-backdrop',
       autoFocus: 'first-tabbable',
       restoreFocus: true,
+      role: aria.role ?? 'dialog',
+      ariaLabelledBy: aria.labelledBy ?? null,
+      ariaDescribedBy: aria.describedBy ?? null,
     });
   }
 
   confirm(options: ConfirmOptions): Promise<boolean> {
-    return firstValueFrom(this.open<boolean, ConfirmOptions, ConfirmDialog>(ConfirmDialog, options, '27rem').closed).then((result) => result === true);
+    const aria: DialogAria = { role: 'alertdialog', labelledBy: 'dlg-confirm-title', describedBy: options.body ? 'dlg-confirm-body' : undefined };
+    return firstValueFrom(this.open<boolean, ConfirmOptions, ConfirmDialog>(ConfirmDialog, options, '27rem', aria).closed).then((result) => result === true);
   }
 
   prompt(options: PromptOptions): Promise<string | null> {
-    return firstValueFrom(this.open<string | null, PromptOptions, PromptDialog>(PromptDialog, options, '30rem').closed).then((result) => result ?? null);
+    return firstValueFrom(this.open<string | null, PromptOptions, PromptDialog>(PromptDialog, options, '30rem', { labelledBy: 'dlg-prompt-title' }).closed).then(
+      (result) => result ?? null,
+    );
   }
 
   twoFactorCode(options: TwoFactorOptions = {}): Promise<string | null> {
-    return firstValueFrom(this.open<string | null, TwoFactorOptions, TwoFactorDialog>(TwoFactorDialog, options, '24rem').closed).then(
+    return firstValueFrom(this.open<string | null, TwoFactorOptions, TwoFactorDialog>(TwoFactorDialog, options, '24rem', { labelledBy: 'dlg-tfa-title' }).closed).then(
       (result) => result ?? null,
     );
   }

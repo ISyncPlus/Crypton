@@ -241,7 +241,7 @@ export class Market implements OnInit {
   }
 
   take(ad: MarketAd): void {
-    this.dialogs.open<void, TakeOfferData, TakeOfferDialog>(TakeOfferDialog, { ad }, '32rem');
+    this.dialogs.open<void, TakeOfferData, TakeOfferDialog>(TakeOfferDialog, { ad }, '32rem', { labelledBy: 'dlg-take-title' });
   }
 
   protected ngn(value: string, digits = 2): string {

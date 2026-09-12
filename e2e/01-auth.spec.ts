@@ -36,6 +36,14 @@ test('a session survives a reload and ends on sign out', async ({ page }) => {
   await expect(page).toHaveURL(/\/auth\/sign-in/);
 });
 
+test('the reset form confirms a link is on its way', async ({ page }) => {
+  await page.goto('/auth/forgot-password');
+  await page.getByLabel('Email').fill(uniqueEmail('nobody'));
+  await page.getByRole('button', { name: 'Send reset link' }).click();
+  await expect(page.getByRole('heading', { name: 'Check your email' })).toBeVisible();
+  await expect(page).toHaveURL(/\/auth\/forgot-password$/);
+});
+
 test('new users confirm their email, verify identity and get approved by compliance', async ({ browser, request }) => {
   const email = uniqueEmail('newbie');
   const password = 'Strong-Pass-2026';

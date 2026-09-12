@@ -502,7 +502,7 @@ export class BarChart {
   protected readonly activeIndex = signal<number | null>(null);
   protected readonly top = 10;
 
-  protected readonly plotRight = computed(() => this.width() - 60);
+  protected readonly plotRight = computed(() => this.width() - 68);
   protected readonly plotBottom = computed(() => this.height() - 24);
   protected readonly hasData = computed(() => this.data().some((d) => d.value > 0));
   private readonly ticks = computed(() => niceTicks(0, Math.max(0, ...this.data().map((d) => d.value)), 2));

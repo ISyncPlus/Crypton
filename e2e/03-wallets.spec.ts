@@ -8,7 +8,7 @@ test('balances, activity and deposit address', async ({ page }) => {
   await shot(page, 'wallets-balances');
 
   await page.goto('/wallets/activity');
-  await expect(page.getByText('Buy').first()).toBeVisible();
+  await expect(page.getByText('Balance adjustment').first()).toBeVisible();
 
   await page.goto('/wallets/eth/deposit');
   await expect(page.getByRole('heading', { name: 'Your ETH address' })).toBeVisible();
@@ -49,7 +49,7 @@ test('crypto withdrawals require two-factor authentication by default', async ({
   await expect(page.getByText('Total deducted')).toBeVisible();
   await shot(page, 'wallets-withdraw');
   await page.getByRole('button', { name: 'Review and send' }).click();
-  await page.getByRole('dialog').getByRole('button', { name: 'Send now' }).click();
+  await page.getByRole('alertdialog').getByRole('button', { name: 'Send now' }).click();
   await expect(page.getByRole('link', { name: 'Turn on two-factor authentication' })).toBeVisible();
 });
 

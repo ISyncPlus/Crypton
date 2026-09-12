@@ -18,7 +18,7 @@ import { authStyles } from './auth-styles';
         <h1>Reset your password</h1>
         <p>Enter the email on your account and we'll send a reset link.</p>
       </div>
-      <form (ngSubmit)="submit()" novalidate>
+      <form (submit)="$event.preventDefault(); submit()" novalidate>
         <label class="field">
           <span class="field__label">Email</span>
           <input class="input" type="email" [formControl]="email" autocomplete="email" [attr.aria-invalid]="!!error()" />

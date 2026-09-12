@@ -54,7 +54,7 @@ test('a full P2P trade: ad, order, payment, release with two-factor, feedback', 
   const orderUrl = new URL(buyer.url()).pathname;
 
   await buyer.getByRole('button', { name: "I've sent the payment" }).click();
-  await buyer.getByRole('dialog').getByRole('button', { name: "Yes, I've paid" }).click();
+  await buyer.getByRole('alertdialog').getByRole('button', { name: "Yes, I've paid" }).click();
   await expect(buyer.getByText('Paid, awaiting release').first()).toBeVisible();
 
   // Seller: release with a fresh authenticator code.
@@ -62,7 +62,7 @@ test('a full P2P trade: ad, order, payment, release with two-factor, feedback', 
   await expect(seller.getByRole('heading', { name: 'Check your bank account, then release' })).toBeVisible();
   await shot(seller, 'p2p-order-release');
   await seller.getByRole('button', { name: /^Release .+ USDT$/ }).click();
-  await seller.getByRole('dialog').getByRole('button', { name: 'Release crypto' }).click();
+  await seller.getByRole('alertdialog').getByRole('button', { name: 'Release crypto' }).click();
   const code = await nextTotp(key);
   await seller.getByRole('dialog').getByRole('textbox').fill(code);
   await expect(seller.getByText('Crypto released')).toBeVisible();

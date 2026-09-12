@@ -38,9 +38,9 @@ export interface TakeOfferData {
     }
   `,
   template: `
-    <div class="dialog" aria-labelledby="take-title">
+    <div class="dialog">
       <div class="dialog__head">
-        <h2 class="dialog__title" id="take-title">{{ buying() ? 'Buy' : 'Sell' }} {{ ad.asset }}</h2>
+        <h2 class="dialog__title" id="dlg-take-title">{{ buying() ? 'Buy' : 'Sell' }} {{ ad.asset }}</h2>
         <button type="button" class="btn btn--quiet btn--icon btn--sm" (click)="ref.close()" aria-label="Close"><cx-icon name="x" [size]="16" /></button>
       </div>
 

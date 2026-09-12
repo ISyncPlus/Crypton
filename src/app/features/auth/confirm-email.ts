@@ -42,7 +42,7 @@ import { authStyles } from './auth-styles';
             <p>{{ message() }}</p>
           </div>
         </div>
-        <form (ngSubmit)="resend()" novalidate>
+        <form (submit)="$event.preventDefault(); resend()" novalidate>
           <label class="field">
             <span class="field__label">Email</span>
             <input class="input" type="email" [formControl]="email" autocomplete="email" />

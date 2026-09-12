@@ -51,26 +51,26 @@ import { adminTableStyles, pagedList } from './admin-shared';
           }
           @if (!importing()) {
             <div class="add">
-              <label class="field">
-                <span class="field__label">Network</span>
-                <select class="select" [value]="network()" (change)="network.set($any($event.target).value)">
+              <div class="field">
+                <label class="field__label" for="block-network">Network</label>
+                <select id="block-network" class="select" [value]="network()" (change)="network.set($any($event.target).value)">
                   <option value="bitcoin">Bitcoin</option>
                   <option value="ethereum">Ethereum</option>
                 </select>
-              </label>
+              </div>
               <label class="field"><span class="field__label">Address</span><input class="input mono" [value]="address()" (input)="address.set($any($event.target).value.trim())" /></label>
               <label class="field"><span class="field__label">Reason</span><input class="input" maxlength="300" [value]="reason()" (input)="reason.set($any($event.target).value)" /></label>
               <button type="button" class="btn btn--primary" [disabled]="!address() || !reason().trim() || busy()" [attr.aria-busy]="busy()" (click)="add()">Block</button>
             </div>
           } @else {
             <div class="add" style="grid-template-columns: 9rem minmax(0, 1fr) 10rem">
-              <label class="field">
-                <span class="field__label">Network</span>
-                <select class="select" [value]="network()" (change)="network.set($any($event.target).value)">
+              <div class="field">
+                <label class="field__label" for="import-network">Network</label>
+                <select id="import-network" class="select" [value]="network()" (change)="network.set($any($event.target).value)">
                   <option value="bitcoin">Bitcoin</option>
                   <option value="ethereum">Ethereum</option>
                 </select>
-              </label>
+              </div>
               <label class="field"><span class="field__label">Reason</span><input class="input" maxlength="300" [value]="reason()" (input)="reason.set($any($event.target).value)" /></label>
               <label class="field"><span class="field__label">Source</span><input class="input" maxlength="40" placeholder="e.g. ofac-sdn" [value]="source()" (input)="source.set($any($event.target).value)" /></label>
             </div>

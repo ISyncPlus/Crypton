@@ -92,12 +92,9 @@ const ICON: Record<string, IconName> = { success: 'check', error: 'alert', warni
       }
     }
   `,
+  // The host is the live region, so each toast is announced once when it is added.
+  host: { 'aria-live': 'polite', 'aria-relevant': 'additions' },
   template: `
-    <div aria-live="polite" class="sr-only">
-      @for (toast of toasts.toasts(); track toast.id) {
-        {{ toast.title }}
-      }
-    </div>
     @for (toast of toasts.toasts(); track toast.id) {
       <div class="toast" [attr.data-kind]="toast.kind" (mouseenter)="toasts.hold(toast.id)" (mouseleave)="toasts.release(toast.id)">
         <cx-icon [name]="icon(toast.kind)" [size]="18" />

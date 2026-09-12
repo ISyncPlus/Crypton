@@ -70,7 +70,7 @@ type TfaStep = 'idle' | 'setup' | 'codes';
       border-top: 1px solid var(--rule);
     }
 
-    .session span {
+    .session__text {
       display: grid;
       min-width: 0;
       line-height: 1.35;
@@ -220,7 +220,7 @@ type TfaStep = 'idle' | 'setup' | 'codes';
           <div class="panel__header"><h2 class="panel__title" id="sessions-title">Signed-in devices</h2></div>
           @for (session of sessions(); track session.id) {
             <div class="session">
-              <span>
+              <span class="session__text">
                 <strong>{{ session.device }}</strong>
                 <small>{{ session.ipAddress ?? 'Unknown IP' }}, last active {{ when(session.lastUsedAt ?? session.createdAt) }}</small>
               </span>

@@ -112,15 +112,15 @@ import { Icon } from '../../ui/icon';
             <p class="caption">The account name must match your verified name: {{ fullName() }}.</p>
           }
 
-          <label class="field">
-            <span class="field__label">Bank</span>
-            <select class="select" [value]="bankCode()" (change)="setBank($any($event.target).value)" [disabled]="!banks().length">
+          <div class="field">
+            <label class="field__label" for="bank-select">Bank</label>
+            <select id="bank-select" class="select" [value]="bankCode()" (change)="setBank($any($event.target).value)" [disabled]="!banks().length">
               <option value="">{{ banks().length ? 'Choose a bank' : 'Loading banks…' }}</option>
               @for (bank of banks(); track bank.code) {
                 <option [value]="bank.code" [selected]="bank.code === bankCode()">{{ bank.name }}</option>
               }
             </select>
-          </label>
+          </div>
 
           <label class="field">
             <span class="field__label">Account number</span>

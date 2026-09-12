@@ -43,7 +43,7 @@ const REPORTS: { type: ReportType; title: string; description: string }[] = [
       border-top: 1px solid var(--rule);
     }
 
-    .report span {
+    .report > span {
       display: grid;
       gap: 0.15rem;
     }

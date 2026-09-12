@@ -192,15 +192,15 @@ type DocField = 'idFront' | 'idBack' | 'selfie' | 'proofOfAddress';
                   <span class="field__label">City</span>
                   <input class="input" autocomplete="address-level2" maxlength="80" [value]="t1.city()" (input)="t1.city.set($any($event.target).value)" />
                 </label>
-                <label class="field">
-                  <span class="field__label">State</span>
-                  <select class="select" [value]="t1.state()" (change)="t1.state.set($any($event.target).value)">
+                <div class="field">
+                  <label class="field__label" for="kyc-state">State</label>
+                  <select id="kyc-state" class="select" [value]="t1.state()" (change)="t1.state.set($any($event.target).value)">
                     <option value="">Choose a state</option>
                     @for (state of states; track state) {
                       <option [value]="state" [selected]="state === t1.state()">{{ state }}</option>
                     }
                   </select>
-                </label>
+                </div>
               </div>
               <div class="pair">
                 <div class="field">
@@ -231,15 +231,15 @@ type DocField = 'idFront' | 'idBack' | 'selfie' | 'proofOfAddress';
             <div class="panel__header"><h2 class="panel__title" id="tier2-title">Upgrade to advanced verification</h2></div>
             <div class="panel__body form">
               <p class="secondary">Upload a government ID, a selfie of you holding it, and a recent proof of address such as a utility bill or bank statement from the last three months.</p>
-              <label class="field" style="max-width: 24rem">
-                <span class="field__label">ID document</span>
-                <select class="select" [value]="docKind()" (change)="docKind.set($any($event.target).value)">
+              <div class="field" style="max-width: 24rem">
+                <label class="field__label" for="kyc-document">ID document</label>
+                <select id="kyc-document" class="select" [value]="docKind()" (change)="docKind.set($any($event.target).value)">
                   <option value="">Choose a document</option>
                   @for (kind of documentKinds; track kind.value) {
                     <option [value]="kind.value" [selected]="kind.value === docKind()">{{ kind.label }}</option>
                   }
                 </select>
-              </label>
+              </div>
               <div class="pair">
                 @for (slot of slots; track slot.field) {
                   <label class="file">

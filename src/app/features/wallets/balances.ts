@@ -20,7 +20,7 @@ const ORDER: AssetCode[] = ['NGN', 'BTC', 'ETH', 'USDT'];
       gap: var(--space-3);
     }
 
-    .asset span {
+    .asset > span {
       display: grid;
       line-height: 1.3;
     }

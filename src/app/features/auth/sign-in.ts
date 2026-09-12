@@ -95,7 +95,7 @@ import { authStyles } from './auth-styles';
         </div>
       }
 
-      <form (ngSubmit)="submitCode()" novalidate>
+      <form (submit)="$event.preventDefault(); submitCode()" novalidate>
         @if (useRecovery()) {
           <label class="field">
             <span class="field__label">Recovery code</span>

@@ -175,15 +175,15 @@ const ASSETS: AssetCode[] = ['USDT', 'BTC', 'ETH'];
                 </label>
               </div>
 
-              <label class="field">
-                <span class="field__label">Payment window</span>
-                <select class="select" [value]="windowMinutes()" (change)="windowMinutes.set(+$any($event.target).value)">
+              <div class="field">
+                <label class="field__label" for="ad-window">Payment window</label>
+                <select id="ad-window" class="select" aria-describedby="ad-window-hint" [value]="windowMinutes()" (change)="windowMinutes.set(+$any($event.target).value)">
                   @for (minutes of c.paymentWindowsMinutes; track minutes) {
                     <option [value]="minutes" [selected]="minutes === windowMinutes()">{{ minutes }} minutes</option>
                   }
                 </select>
-                <span class="field__hint">How long the buyer has to pay before the order expires.</span>
-              </label>
+                <span id="ad-window-hint" class="field__hint">How long the buyer has to pay before the order expires.</span>
+              </div>
 
               @if (currentSide() === 'Sell') {
                 <fieldset class="field" style="border: 0; margin: 0; padding: 0">
